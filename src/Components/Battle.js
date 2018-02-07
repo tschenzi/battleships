@@ -96,7 +96,11 @@ const ComputerField = connect(
   mapDispatchToPropsComputerField
 )(ComputerFieldDisplay)
 
-const BattleMessageBox = () => (<div></div>); 
+// const BattleMessageBoxView = ({message}) => (<div className='message'>{message}</div>); 
+// const mapStateToPropsMessageBox = state => ({
+//   message: state.battle.message
+// })
+// const BattleMessageBox = connect(mapStateToPropsMessageBox)(BattleMessageBoxView);
 
 
 class Battle extends Component {
@@ -107,9 +111,7 @@ class Battle extends Component {
           <PlayerField />
           <ComputerField />
         </div >
-        <div>
-          <BattleMessageBox />
-        </div>
+      
       </div>
     );
   }

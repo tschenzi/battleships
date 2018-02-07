@@ -158,6 +158,7 @@
   flex-direction: row;
   border: 1px solid black;
   background-color: lightgray;
+  margin: 10px;
 }
 
 .placement-sidebox {
@@ -169,6 +170,26 @@
 
 }
 
-/* .cell:hover {
-  background: #aa00cc;
-} */
+.header {
+  font-size: 3em;
+  width: 900px;
+  height: 80px;
+  background-color: lightgray;
+  border: 1px solid black;
+  margin: 10px;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  line-height: 80px
+}
+
+.message {
+  font-size: 2em;
+  width: 902px;
+  height: 80px;
+  line-height: 80px;
+  background-color: lightgray;
+  margin: 10px;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+}
+

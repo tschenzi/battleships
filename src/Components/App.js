@@ -44,21 +44,21 @@ class Cell extends Component{
 class App extends Component {
   render() {
     return (
-      this.props.battleActive ? 
-      <div className='noselect'>
-        <Battle />
-      </div> : 
-      <div className='noselect'>
+      <div className= 'noselect'>
+      <div className = 'header'>Battleships</div >
+      {this.props.battleActive ? 
+       <Battle />
+       : 
        <div className = 'playground'> 
          <PlacementBox />
          <div className='placement-sidebox'>
-           <div><OrientationSelectorBox /></div>
+           <OrientationSelectorBox />
            <UndoShipPlacement />
            <AutoShipPlacement />
-           <div><StartGame /></div>
+           <StartGame />
          </div>
-       </div>   
-     </div> 
+      </div> }   
+     </div>
     );
   }
 }
