@@ -187,11 +187,44 @@ const shipPlacements = (state = {
 
         case 'AUTO_PLACEMENT': {
             console.log("auto placement received");
+           
+
+            var xhr = new XMLHttpRequest();
+           
+            xhr.open("POST", "http://localhost:3333/api/placeships", false);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            
+            var back;
+            xhr.onreadystatechange = function() {
+                if(this.readyState === 4 && this.status === 200) 
+                {
+                    // Request finished. Do processing here.
+                    console.log("success");
+                    back = JSON.parse(xhr.responseText);
+                  //  console.log("back from server: "+back);
+                    action.asyncDispatch({type: "AUTO_PLACEMENT_RESULT", back})
+                    
+                }
+               // fehlerfall? - gibbet nich
+            }
+
+            xhr.send(JSON.stringify({field: state.field, shipIndex: state.numShip }));
+            return state; // todo: not safe against double clicks. make vector self contained
+        }
+
+        case 'AUTO_PLACEMENT_RESULT': {
+            //let {placedShips, newShipIndex: numShip} = util.autoShipPlacement(copy.field, copy.numShip);
             let copy = Object.assign({}, state, {field: state.field.map(cell => Object.assign({}, cell))});
-            let {placedShips, newShipIndex: numShip} = util.autoShipPlacement(copy.field, copy.numShip);
+            let numShip = action.back.newShipIndex;
+            let placedShips = action.back.placedShips;
+
             copy.numShip = numShip;
             console.log('num ship: '+numShip);
-            placedShips.forEach(ship => {action.asyncDispatch(shipPlaced(ship.cellIndex, ship.numShip, ship.orientation))});
+
+            placedShips.forEach(ship => {
+                action.asyncDispatch(shipPlaced(ship.cellIndex, ship.numShip, ship.orientation));
+                util.placeShipOnField(copy.field, consts.SHIPS_TO_PLACE[ship.numShip], ship.cellIndex, ship.orientation);
+            });
             console.log("ship placed: "+placedShips.length)
             if (copy.numShip < consts.NUM_SHIPS_TO_PLACE)
             {
